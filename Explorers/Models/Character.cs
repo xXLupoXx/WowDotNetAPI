@@ -16,7 +16,7 @@ namespace WowDotNetAPI.Explorers.Models
 		public int level { get; set; }
 		public int achievementPoints { get; set; }
 		public string thumbnail { get; set; }
-		public Guild guild { get; set; }
+		public CharacterGuild guild { get; set; }
 		public Equipment items { get; set; }
 		public Stats stats { get; set; }
 		public ProfessionList professions { get; set; }

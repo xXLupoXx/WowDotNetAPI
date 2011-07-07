@@ -5,15 +5,13 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Guild
+	public class CharacterGuild
 	{
-		public long lastModified { get; set; }
 		public string name { get; set; }
 		public string realm { get; set; }
 		public int level { get; set; }
-		public int side { get; set; }
+		public int members { get; set; }
 		public int achievementPoints { get; set; }
-		public Achievements achievements { get; set; }
-		public IEnumerable<GuildMember> members { get; set; }
+		public Emblem emblem { get; set; }
 	}
 }
