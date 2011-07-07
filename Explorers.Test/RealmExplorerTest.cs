@@ -5,9 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
-using WowDotNetAPI.Explorers;
 using WowDotNetAPI.Explorers.Models;
 using WowDotNetAPI.Explorers.Comparers;
+using WowDotNetAPI.Explorers.Interfaces;
+using WowDotNetAPI.Explorers.Explorers;
 
 namespace Explorers.Test
 {

@@ -5,10 +5,11 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
-using WowDotNetAPI.Explorers.Models;
 using System.IO;
+using WowDotNetAPI.Explorers.Models;
+using WowDotNetAPI.Explorers.Interfaces;
 
-namespace WowDotNetAPI.Explorers
+namespace WowDotNetAPI.Explorers.Explorers
 {
 	public class RealmExplorer : IRealmExplorer
 	{
@@ -16,7 +17,7 @@ namespace WowDotNetAPI.Explorers
 
 		public string Region { get; set; }
 		public JavaScriptSerializer Serializer { get; set; }
-		
+
 		public RealmExplorer() : this("us") { }
 
 		public RealmExplorer(string region)
@@ -66,7 +67,7 @@ namespace WowDotNetAPI.Explorers
 
 		public RealmList GetMultipleRealms(params string[] names)
 		{
-			if (names == null 
+			if (names == null
 				|| names.Length == 0
 				|| names.Any(r => r == null)) return null;
 
@@ -127,7 +128,7 @@ namespace WowDotNetAPI.Explorers
 		{
 			return ConvertRealmListToJson(GetMultipleRealms(mames));
 		}
-			
+
 		public string GetRealmsViaQueryAsJson(string query)
 		{
 			return GetJson(string.Format(baseRealmAPIurl, Region, query));

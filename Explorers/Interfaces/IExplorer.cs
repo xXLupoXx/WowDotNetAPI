@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Web.Script.Serialization;
 
-namespace WowDotNetAPI.Explorers
+namespace WowDotNetAPI.Explorers.Interfaces
 {
 	public interface IExplorer
 	{

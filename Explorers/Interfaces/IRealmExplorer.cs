@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using WowDotNetAPI.Explorers.Models;
 
-namespace WowDotNetAPI.Explorers
+namespace WowDotNetAPI.Explorers.Interfaces
 {
 	public interface IRealmExplorer : IExplorer
 	{
