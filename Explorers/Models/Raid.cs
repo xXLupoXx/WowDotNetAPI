@@ -11,6 +11,6 @@ namespace WowDotNetAPI.Explorers.Models
 		public int normal { get; set; }
 		public int heroic { get; set; }
 		public int id { get; set; }
-		public List<Boss> bosses { get; set; }
+		public IEnumerable<Boss> bosses { get; set; }
 	}
 }

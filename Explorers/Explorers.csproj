@@ -59,11 +59,11 @@
     <Compile Include="Models\Emblem.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\Glyph.cs" />
-    <Compile Include="Models\Glyphs.cs" />
+    <Compile Include="Models\GlyphList.cs" />
     <Compile Include="Models\Guild.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Profession.cs" />
-    <Compile Include="Models\Professions.cs" />
+    <Compile Include="Models\ProfessionList.cs" />
     <Compile Include="Models\Progression.cs" />
     <Compile Include="Models\Raid.cs" />
     <Compile Include="Models\RealmList.cs" />

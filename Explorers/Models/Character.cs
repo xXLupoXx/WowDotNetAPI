@@ -19,11 +19,11 @@ namespace WowDotNetAPI.Explorers.Models
 		public Guild guild { get; set; }
 		public Equipment items { get; set; }
 		public Stats stats { get; set; }
-		public Professions professions { get; set; }
-		public List<Reputation> reputation { get; set; }
-		public List<Title> titles { get; set; }
+		public ProfessionList professions { get; set; }
+		public IEnumerable<Reputation> reputation { get; set; }
+		public IEnumerable<Title> titles { get; set; }
 		public Achievements achievements { get; set; }
-		public List<TalentSpecialization> talents { get; set; }
+		public IEnumerable<TalentSpecialization> talents { get; set; }
 		public Appearance appearance { get; set; }
 		public int[] mounts { get; set; }
 		public int[] companions { get; set; }
