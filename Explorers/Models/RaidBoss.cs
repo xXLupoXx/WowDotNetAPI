@@ -5,11 +5,11 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Glyph
+	public class RaidBoss
 	{
-		public int glyph { get; set; }
-		public int item { get; set; }
 		public string name { get; set; }
-		public string icon { get; set; }
+		public int normalKills { get; set; }
+		public int heroicKills { get; set; }
+		public int id { get; set; }
 	}
 }

@@ -2,48 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WowDotNetAPI.Explorers.Models.Interfaces;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class RealmList : IRealmList
+	public class RealmList
 	{
-		public List<Realm> realms { get; set; }
+		public IEnumerable<Realm> realms { get; set; }
 		
 		public void FilterByQueue(bool queue)
 		{
-			foreach (Realm realm in realms)
-			{
-				if (realm.queue != queue)
-					realms.Remove(realm);
-			}
+			realms = realms.Where(r => r.queue == queue);
 		}
 
 		public void FilterByStatus(bool status)
 		{
-			foreach (Realm realm in realms)
-			{
-				if (realm.status != status)
-					realms.Remove(realm);
-			}
+			realms = realms.Where(r => r.status == status);
 		}
 
 		public void FilterByPopulation(string population)
 		{
-			foreach (Realm realm in realms)
-			{
-				if (!realm.population.Equals(population, StringComparison.InvariantCultureIgnoreCase))
-					realms.Remove(realm);
-			}
+			realms = realms.Where(r => r.population.Equals(population, StringComparison.InvariantCultureIgnoreCase));
 		}
 
 		public void FilterByType(string type)
 		{
-			foreach (Realm realm in realms)
-			{
-				if (!realm.type.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-					realms.Remove(realm);
-			}
+			realms = realms.Where(r => r.type.Equals(type, StringComparison.InvariantCultureIgnoreCase));
 		}
 	}
 }

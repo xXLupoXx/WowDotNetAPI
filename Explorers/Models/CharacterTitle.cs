@@ -5,11 +5,9 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Glyph
+	public class CharacterTitle
 	{
-		public int glyph { get; set; }
-		public int item { get; set; }
+		public int id { get; set; }
 		public string name { get; set; }
-		public string icon { get; set; }
 	}
 }

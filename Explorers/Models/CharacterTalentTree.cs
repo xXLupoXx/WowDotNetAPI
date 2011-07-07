@@ -5,8 +5,9 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Progression
+	public class CharacterTalentTree
 	{
-		public IEnumerable<Raid> raids { get; set; }
+		public string points { get; set; }
+		public int total { get; set; }
 	}
 }
