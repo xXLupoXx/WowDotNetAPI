@@ -17,6 +17,11 @@ namespace WowDotNetAPI.Explorers.Explorers
 
 		public string Region { get; set; }
 		public JavaScriptSerializer Serializer { get; set; }
+		public WebRequest Request { get; set; }
+		public string ProxyURL { get; set; }
+		public string ProxyUser { get; set; }
+		public string ProxyPassword { get; set; }
+		public bool HasProxy { get; set; }
 
 		public RealmExplorer() : this("us") { }
 
@@ -24,6 +29,23 @@ namespace WowDotNetAPI.Explorers.Explorers
 		{
 			this.Region = region;
 			this.Serializer = new JavaScriptSerializer();
+			this.HasProxy = false;
+		}
+
+		public RealmExplorer(String proxyUser, String proxyPassword, String proxyURL) : this("us")
+		{
+			this.ProxyUser = proxyUser;
+			this.ProxyPassword = proxyPassword;
+			this.ProxyURL = proxyURL;
+			this.HasProxy = true;
+		}
+
+		public RealmExplorer(String region, String proxyUser, String proxyPassword, String proxyURL) : this(region)
+		{
+			this.ProxyUser = proxyUser;
+			this.ProxyPassword = proxyPassword;
+			this.ProxyURL = proxyURL;
+			this.HasProxy = true;
 		}
 
 		public Realm GetSingleRealm(string name)
@@ -146,9 +168,17 @@ namespace WowDotNetAPI.Explorers.Explorers
 
 		private string GetJson(string url)
 		{
-			WebRequest request = WebRequest.Create(url);
-			WebResponse res = request.GetResponse();
-			StreamReader reader = new StreamReader(res.GetResponseStream());
+			Request = WebRequest.Create(url);
+
+			if (HasProxy)
+			{
+				WebProxy proxy = new WebProxy(ProxyURL);
+				proxy.Credentials = new NetworkCredential(ProxyUser, ProxyPassword);
+				Request.Proxy = proxy;
+			}
+
+			WebResponse response = Request.GetResponse();
+			StreamReader reader = new StreamReader(response.GetResponseStream());
 			return reader.ReadToEnd();
 		}
 

@@ -9,8 +9,6 @@ namespace WowDotNetAPI.Explorers.Interfaces
 {
 	public interface IRealmExplorer : IExplorer
 	{
-		string Region { get; set; }
-
 		Realm GetSingleRealm(string name);
 		string GetSingleRealmAsJson(string name);
 
