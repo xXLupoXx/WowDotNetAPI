@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Emblem
+	public class GuildEmblem
 	{
 		public int icon { get; set; }
 		public string iconColor { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Equipment
+	public class CharacterEquipment
 	{
 		public int averageItemLevel { get; set; }
 		public int averageItemLevelEquipped { get; set; }

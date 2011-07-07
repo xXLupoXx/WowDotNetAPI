@@ -10,7 +10,7 @@ namespace WowDotNetAPI.Explorers.Models
 		public int minGuildLevel { get; set; }
 		public int minGuildRepLevel { get; set; }
 		public int[] races { get; set; }
-		public Achievement achievement { get; set; }
+		public GuildAchievement achievement { get; set; }
 		public Item item { get; set; }
 	}
 }

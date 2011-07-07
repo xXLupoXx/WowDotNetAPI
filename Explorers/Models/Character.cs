@@ -17,14 +17,14 @@ namespace WowDotNetAPI.Explorers.Models
 		public int achievementPoints { get; set; }
 		public string thumbnail { get; set; }
 		public CharacterGuild guild { get; set; }
-		public Equipment items { get; set; }
-		public Stats stats { get; set; }
+		public CharacterEquipment items { get; set; }
+		public CharacterStats stats { get; set; }
 		public ProfessionList professions { get; set; }
 		public IEnumerable<Reputation> reputation { get; set; }
-		public IEnumerable<Title> titles { get; set; }
+		public IEnumerable<CharacterTitle> titles { get; set; }
 		public Achievements achievements { get; set; }
-		public IEnumerable<TalentSpecialization> talents { get; set; }
-		public Appearance appearance { get; set; }
+		public IEnumerable<CharacterTalentSpecialization> talents { get; set; }
+		public CharacterAppearance appearance { get; set; }
 		public int[] mounts { get; set; }
 		public int[] companions { get; set; }
 		public Progression progression { get; set; }

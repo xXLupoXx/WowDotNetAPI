@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class TooltipParameters
+	public class ItemTooltipParameters
 	{
 		public int gem0 { get; set; }
 		public int gem1 { get; set; }

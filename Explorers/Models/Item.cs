@@ -11,6 +11,6 @@ namespace WowDotNetAPI.Explorers.Models
 		public string name { get; set; }
 		public string icon { get; set; }
 		public int quality { get; set; }
-		public TooltipParameters tooltipParams { get; set; }
+		public ItemTooltipParameters tooltipParams { get; set; }
 	}
 }

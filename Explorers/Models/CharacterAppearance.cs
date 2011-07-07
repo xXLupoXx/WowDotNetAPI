@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Appearance
+	public class CharacterAppearance
 	{
 		public int faceVariation { get; set; }
 		public int skinColor { get; set; }

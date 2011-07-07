@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Stats
+	public class CharacterStats
 	{
 		public int health { get; set; }
 		public string powerType { get; set; }

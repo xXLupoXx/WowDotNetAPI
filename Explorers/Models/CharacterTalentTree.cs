@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class TalentTree
+	public class CharacterTalentTree
 	{
 		public string points { get; set; }
 		public int total { get; set; }

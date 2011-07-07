@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Achievement
+	public class GuildAchievement
 	{
 		public int id { get; set; }
 		public string title { get; set; }

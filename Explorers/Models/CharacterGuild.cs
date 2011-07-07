@@ -12,6 +12,6 @@ namespace WowDotNetAPI.Explorers.Models
 		public int level { get; set; }
 		public int members { get; set; }
 		public int achievementPoints { get; set; }
-		public Emblem emblem { get; set; }
+		public GuildEmblem emblem { get; set; }
 	}
 }
