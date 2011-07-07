@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WowDotNetAPI.Explorers.Models.Interfaces;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Character : ICharacter
+	public class Character
 	{
 		public string lastModified { get; set; }
 		public string name { get; set; }
@@ -17,15 +16,15 @@ namespace WowDotNetAPI.Explorers.Models
 		public int level { get; set; }
 		public int achievementPoints { get; set; }
 		public string thumbnail { get; set; }
-		public Guild guild { get; set; }
-		public Equipment items { get; set; }
-		public Stats stats { get; set; }
-		public Professions professions { get; set; }
-		public List<Reputation> reputation { get; set; }
-		public List<Title> titles { get; set; }
+		public CharacterGuild guild { get; set; }
+		public CharacterEquipment items { get; set; }
+		public CharacterStats stats { get; set; }
+		public ProfessionList professions { get; set; }
+		public IEnumerable<Reputation> reputation { get; set; }
+		public IEnumerable<CharacterTitle> titles { get; set; }
 		public Achievements achievements { get; set; }
-		public List<TalentSpecialization> talents { get; set; }
-		public Appearance appearance { get; set; }
+		public IEnumerable<CharacterTalentSpecialization> talents { get; set; }
+		public CharacterAppearance appearance { get; set; }
 		public int[] mounts { get; set; }
 		public int[] companions { get; set; }
 		public Progression progression { get; set; }

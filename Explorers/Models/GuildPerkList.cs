@@ -5,8 +5,8 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-	public class Progression
+	public class GuildPerkList
 	{
-		public IEnumerable<Raid> raids { get; set; }
+		public IEnumerable<GuildPerk> perks { get; set; }
 	}
 }
