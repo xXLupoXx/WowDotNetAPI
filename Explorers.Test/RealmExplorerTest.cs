@@ -275,13 +275,13 @@ namespace Explorers.Test
 			Assert.IsTrue(realmList.realms.Count() >= 241);
 		}
 
-		//EU- Europe; 265 realms as of 04/22/2011
+		//EU- Europe; 264 realms as of  July 8th 2011
 		[TestMethod]
 		public void GetAll_EU_Realms_Returns_All_EU_Realms()
 		{
 			realmExplorer.Region = "eu";
 			var realmList = realmExplorer.GetAllRealms();
-			Assert.IsTrue(realmList.realms.Count() >= 265);
+			Assert.IsTrue(realmList.realms.Count() >= 264);
 		}
 
 		[TestMethod]
