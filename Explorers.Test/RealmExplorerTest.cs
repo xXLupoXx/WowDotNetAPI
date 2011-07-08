@@ -222,15 +222,6 @@ namespace Explorers.Test
 		}
 
 		[TestMethod]
-		public void Get_Realms_Using_Multiple_InvalidNamesArray_Query_Returns_Null()
-		{
-			var namesList = new string[] { "Aioros", "Aioria", "Shiryu" };
-			var realmList = realmExplorer.GetMultipleRealms(namesList);
-
-			Assert.IsNull(realmList);
-		}
-
-		[TestMethod]
 		public void Get_Realms_Using_Valid_Query_Returns_Valid_Results()
 		{
 			var realmList = realmExplorer.GetMultipleRealmsViaQuery("?realm=Medivh&realm=Blackrock");
