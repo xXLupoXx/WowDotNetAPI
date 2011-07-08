@@ -133,7 +133,7 @@ namespace Explorers.Test
             var realmList = realmExplorer.GetRealmsByQueue(false);
             var realmsJson = realmExplorer.GetRealmsByQueueAsJson(false);
 
-            var realmListFromJson = serializer.Deserialize<List<Realm>>(realmsJson);
+            IEnumerable<Realm> realmListFromJson = serializer.Deserialize<List<Realm>>(realmsJson);
 
             //All servers getting queues is unlikely but possible and will cause test to fail
             var allCollectedRealmsDoNotHaveQueues = realmListFromJson.Any() &&
