@@ -95,7 +95,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 				|| names.Length == 0
 				|| names.Any(r => r == null)) return null;
 
-            var query = "?realm=" + String.Join(",", names);
+            var query = "?realms=" + String.Join(",", names);
 			
 			return GetMultipleRealmsViaQuery(query);
 		}
@@ -162,7 +162,9 @@ namespace WowDotNetAPI.Explorers.Explorers
 
 		public RealmList GetRealmData(string url)
 		{
-			return Serializer.Deserialize<RealmList>(GetJson(url));
+            var sanitizedUrl = this.SanitizeUrl(url);
+            var json = this.GetJson(sanitizedUrl);
+			return this.Serializer.Deserialize<RealmList>(json);
 		}
 
 		private string GetJson(string url)
