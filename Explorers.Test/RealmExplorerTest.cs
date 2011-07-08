@@ -111,7 +111,7 @@ namespace Explorers.Test
 			var realmsJson = realmExplorer.GetRealmsByStatusAsJson(true);
 
 			var jsonObjects = (Dictionary<string, object>)(jsSerializer.DeserializeObject(realmsJson));
-			var realmListFromJson = jsSerializer.ConvertToType<IEnumerable<Realm>>(jsonObjects["realms"]);
+			var realmListFromJson = jsSerializer.ConvertToType<List<Realm>>(jsonObjects["realms"]);
 
 			//All servers being down is likely(maintenance) and will cause test to fail
 			var allCollectedRealmsAreOnline = realmListFromJson.Any() &&
@@ -140,7 +140,7 @@ namespace Explorers.Test
 			var realmsJson = realmExplorer.GetRealmsByQueueAsJson(false);
 			
 			var jsonObjects = (Dictionary<string, object>)(jsSerializer.DeserializeObject(realmsJson));
-			var realmListFromJson = jsSerializer.ConvertToType<IEnumerable<Realm>>(jsonObjects["realms"]);
+			var realmListFromJson = jsSerializer.ConvertToType<List<Realm>>(jsonObjects["realms"]);
 
 			//All servers getting queues is unlikely but possible and will cause test to fail
 			var allCollectedRealmsDoNotHaveQueues = realmListFromJson.Any() &&

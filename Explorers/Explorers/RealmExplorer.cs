@@ -160,7 +160,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         private string ConvertRealmListToJson(RealmList realmList)
         {
-            return Serializer.Serialize(new Dictionary<string, RealmList> { { "realms", realmList } });
+            return Serializer.Serialize(realmList);
         }
 
         public RealmList GetRealmData(string url)
