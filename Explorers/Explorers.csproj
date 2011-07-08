@@ -49,13 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparers\RealmNameComparer.cs" />
     <Compile Include="Explorers\CharacterExplorer.cs" />
     <Compile Include="Explorers\OptionalFields\CharacterFields.cs" />
     <Compile Include="Explorers\OptionalFields\GuildFields.cs" />
     <Compile Include="Explorers\RealmExplorer.cs" />
+    <Compile Include="Extensions\RealmExtensions.cs" />
+    <Compile Include="IJsonSource.cs" />
     <Compile Include="Interfaces\ICharacterExplorer.cs" />
-    <Compile Include="Interfaces\IExplorer.cs" />
     <Compile Include="Interfaces\IRealmExplorer.cs" />
+    <Compile Include="JsonSource.cs" />
+    <Compile Include="JsonSourceBase.cs" />
+    <Compile Include="Models\RealmList.cs" />
+    <Compile Include="ProxyJsonSource.cs" />
     <Compile Include="Models\GuildAchievement.cs" />
     <Compile Include="Models\Achievements.cs" />
     <Compile Include="Models\CharacterAppearance.cs" />
@@ -82,7 +88,6 @@
     <Compile Include="Models\Race.cs" />
     <Compile Include="Models\RaceList.cs" />
     <Compile Include="Models\Raid.cs" />
-    <Compile Include="Models\RealmList.cs" />
     <Compile Include="Models\Reputation.cs" />
     <Compile Include="Models\CharacterStats.cs" />
     <Compile Include="Models\CharacterTalentSpecialization.cs" />

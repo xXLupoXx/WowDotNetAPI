@@ -9,78 +9,44 @@ using System.IO;
 
 namespace WowDotNetAPI.Explorers.Explorers
 {
-	public class CharacterExplorer
-	{
-		private const string baseCharacterAPIurl = "http://{0}.battle.net/api/wow/character/{1}/{2}";
-		private const string baseCharacterAPIurlWithFields = "http://{0}.battle.net/api/wow/character/{1}/{2}?fields={3}";
+    public class CharacterExplorer
+    {
+        private const string baseCharacterAPIurl = "http://{0}.battle.net/api/wow/character/{1}/{2}";
+        private const string baseCharacterAPIurlWithFields = "http://{0}.battle.net/api/wow/character/{1}/{2}?fields={3}";
 
-		string Region { get; set; }
-		JavaScriptSerializer Serializer { get; set; }
-		WebRequest Request { get; set; }
-		string ProxyURL { get; set; }
-		string ProxyUser { get; set; }
-		string ProxyPassword { get; set; }
-		bool HasProxy { get; set; }
+        private readonly IJsonSource jsonSource;
+        private readonly string region;
+        private readonly JavaScriptSerializer serializer;
 
-		public CharacterExplorer() : this("us") { }
+        public CharacterExplorer(IJsonSource jsonSource) : this("us", jsonSource, new JavaScriptSerializer()) { }
 
-		public CharacterExplorer(string region)
-		{
-			this.Region = region;
-			this.Serializer = new JavaScriptSerializer();
-			this.HasProxy = false;
-		}
+        public CharacterExplorer(string region, IJsonSource jsonSource, JavaScriptSerializer serializer)
+        {
+            if (region == null) throw new ArgumentNullException("region");
+            if (jsonSource == null) throw new ArgumentNullException("jsonSource");
+            if (serializer == null) throw new ArgumentNullException("serializer");
 
-		public CharacterExplorer(string proxyUser, string proxyPassword, string proxyURL)
-			: this("us")
-		{
-			this.ProxyUser = proxyUser;
-			this.ProxyPassword = proxyPassword;
-			this.ProxyURL = proxyURL;
-			this.HasProxy = true;
-		}
+            this.region = region;
 
-		public CharacterExplorer(string region, string proxyUser, string proxyPassword, string proxyURL)
-			: this(region)
-		{
-			this.ProxyUser = proxyUser;
-			this.ProxyPassword = proxyPassword;
-			this.ProxyURL = proxyURL;
-			this.HasProxy = true;
-		}
+            this.jsonSource = jsonSource;
+            this.serializer = serializer;
+        }
 
-		public Character GetSingleCharacter(string name, string realm, params string[] optionalFields)
-		{
-			if(optionalFields != null && optionalFields.Length > 0)
-				return Serializer.Deserialize<Character>(GetJson(string.Format(baseCharacterAPIurlWithFields, Region, realm, name, GetOptionalFieldList(optionalFields))));
-			else
-				return Serializer.Deserialize<Character>(GetJson(string.Format(baseCharacterAPIurl, Region, realm, name)));
-		}
+        public Character GetSingleCharacter(string name, string realm, params string[] optionalFields)
+        {
+            string url;
+            if (optionalFields != null && optionalFields.Length > 0)
+            {
+                var optionalFieldList = String.Join(",", optionalFields);
+                url = string.Format(baseCharacterAPIurlWithFields, this.region, realm, name, optionalFieldList);
+            }
+            else
+            {
+                url = string.Format(baseCharacterAPIurl, this.region, realm, name);
+            }
 
-		private string GetOptionalFieldList(string[] optionalFields)
-		{
-			string fieldList = optionalFields[0];
-
-			for (int i = 1; i < optionalFields.Length; i++)
-				fieldList += "," + optionalFields[i];
-
-			return fieldList;
-		}
-
-		private string GetJson(string url)
-		{
-			Request = WebRequest.Create(url);
-
-			if (HasProxy)
-			{
-				WebProxy proxy = new WebProxy(ProxyURL);
-				proxy.Credentials = new NetworkCredential(ProxyUser, ProxyPassword);
-				Request.Proxy = proxy;
-			}
-
-			WebResponse response = Request.GetResponse();
-			StreamReader reader = new StreamReader(response.GetResponseStream());
-			return reader.ReadToEnd();
-		}
-	}
+            var json = jsonSource.GetJson(url);
+            return serializer.Deserialize<Character>(json);
+        }
+    }
 }
