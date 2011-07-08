@@ -7,7 +7,7 @@ using WowDotNetAPI.Explorers.Models;
 
 namespace WowDotNetAPI.Explorers.Interfaces
 {
-	public interface IRealmExplorer : IExplorer
+	public interface IRealmExplorer
 	{
 		Realm GetSingleRealm(string name);
 		string GetSingleRealmAsJson(string name);

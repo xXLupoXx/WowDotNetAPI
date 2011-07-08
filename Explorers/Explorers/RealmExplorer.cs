@@ -17,20 +17,21 @@ namespace WowDotNetAPI.Explorers.Explorers
         private const string baseRealmAPIurl = "http://{0}.battle.net/api/wow/realm/status{1}";
 
         private readonly IJsonSource _JsonSource;
+        private readonly string _Region;
         private readonly JavaScriptSerializer _Serializer;
 
-        public string Region { get; set; }
-
         public RealmExplorer(IJsonSource jsonSource) : this("us", jsonSource, new JavaScriptSerializer()) { }
+
+        public RealmExplorer(string region, IJsonSource jsonSource) : this(region, jsonSource, new JavaScriptSerializer()) { }
 
         public RealmExplorer(string region, IJsonSource jsonSource, JavaScriptSerializer serializer)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
-
-            this.Region = region;
+            if (serializer == null) throw new ArgumentNullException("serializer");
 
             _JsonSource = jsonSource;
+            _Region = region;
             _Serializer = serializer;
         }
 
@@ -42,26 +43,26 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public IEnumerable<Realm> GetAllRealms()
         {
-            return GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
+            return GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
         }
 
         public IEnumerable<Realm> GetRealmsByType(string type)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
+            var realmList = GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
             realmList = realmList.WithType(type);
             return realmList;
         }
 
         public IEnumerable<Realm> GetRealmsByPopulation(string population)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
+            var realmList = GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
             realmList = realmList.WithPopulation(population);
             return realmList;
         }
 
         public IEnumerable<Realm> GetRealmsByStatus(bool status)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
+            var realmList = GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
             if (status)
             {
                 realmList = realmList.WhereUp();
@@ -75,7 +76,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public IEnumerable<Realm> GetRealmsByQueue(bool queue)
         {
-            var realmList = this.GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
+            var realmList = this.GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
             if (queue)
             {
                 realmList = realmList.WithQueue();
@@ -108,7 +109,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
             try
             {
-                var url = string.Format(baseRealmAPIurl, Region, query);
+                var url = string.Format(baseRealmAPIurl, _Region, query);
                 return GetRealmData(url);
             }
             catch
@@ -139,7 +140,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string GetAllRealmsAsJson()
         {
-            var url = string.Format(baseRealmAPIurl, Region, string.Empty);
+            var url = string.Format(baseRealmAPIurl, _Region, string.Empty);
             return _JsonSource.GetJson(url);
         }
 
@@ -155,7 +156,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string GetRealmsViaQueryAsJson(string query)
         {
-            var url = string.Format(baseRealmAPIurl, Region, query);
+            var url = string.Format(baseRealmAPIurl, _Region, query);
             return _JsonSource.GetJson(url);
         }
 

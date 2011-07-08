@@ -6,7 +6,7 @@ using WowDotNetAPI.Explorers.Models;
 
 namespace WowDotNetAPI.Explorers.Interfaces
 {
-	public interface ICharacterExplorer : IExplorer
+	public interface ICharacterExplorer
 	{
 		Character GetSingleCharacter(string name, string realm, params string[] optionalFields);
 	}
