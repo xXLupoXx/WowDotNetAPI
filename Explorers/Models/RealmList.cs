@@ -13,25 +13,5 @@ namespace WowDotNetAPI.Explorers.Models
         }
 
         public IEnumerable<Realm> realms { get; set; }
-		
-		public void FilterByQueue(bool queue)
-		{
-			realms = realms.Where(r => r.queue == queue);
-		}
-
-		public void FilterByStatus(bool status)
-		{
-			realms = realms.Where(r => r.status == status);
-		}
-
-		public void FilterByPopulation(string population)
-		{
-			realms = realms.Where(r => r.population.Equals(population, StringComparison.InvariantCultureIgnoreCase));
-		}
-
-		public void FilterByType(string type)
-		{
-			realms = realms.Where(r => r.type.Equals(type, StringComparison.InvariantCultureIgnoreCase));
-		}
 	}
 }

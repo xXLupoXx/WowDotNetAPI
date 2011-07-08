@@ -53,6 +53,7 @@
     <Compile Include="Explorers\OptionalFields\CharacterFields.cs" />
     <Compile Include="Explorers\OptionalFields\GuildFields.cs" />
     <Compile Include="Explorers\RealmExplorer.cs" />
+    <Compile Include="Extensions\RealmExtensions.cs" />
     <Compile Include="IJsonSource.cs" />
     <Compile Include="Interfaces\ICharacterExplorer.cs" />
     <Compile Include="Interfaces\IExplorer.cs" />
