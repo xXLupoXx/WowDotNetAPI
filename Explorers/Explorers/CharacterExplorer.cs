@@ -19,9 +19,9 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         string Region { get; set; }
 
-        public CharacterExplorer(IJsonSource jsonSource) : this("us", jsonSource) { }
+        public CharacterExplorer(IJsonSource jsonSource) : this("us", jsonSource, new JavaScriptSerializer()) { }
 
-        public CharacterExplorer(string region, IJsonSource jsonSource)
+        public CharacterExplorer(string region, IJsonSource jsonSource, JavaScriptSerializer serializer)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
@@ -29,7 +29,7 @@ namespace WowDotNetAPI.Explorers.Explorers
             this.Region = region;
 
             _JsonSource = jsonSource;
-            _Serializer = new JavaScriptSerializer();
+            _Serializer = serializer;
         }
 
         public Character GetSingleCharacter(string name, string realm, params string[] optionalFields)

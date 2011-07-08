@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using System.IO;
 using WowDotNetAPI.Explorers.Models;
 using WowDotNetAPI.Explorers.Interfaces;
+using WowDotNetAPI.Explorers.Extensions;
 
 namespace WowDotNetAPI.Explorers.Explorers
 {
@@ -20,9 +21,9 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string Region { get; set; }
 
-        public RealmExplorer(IJsonSource jsonSource) : this("us", jsonSource) { }
+        public RealmExplorer(IJsonSource jsonSource) : this("us", jsonSource, new JavaScriptSerializer()) { }
 
-        public RealmExplorer(string region, IJsonSource jsonSource)
+        public RealmExplorer(string region, IJsonSource jsonSource, JavaScriptSerializer serializer)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
@@ -30,7 +31,7 @@ namespace WowDotNetAPI.Explorers.Explorers
             this.Region = region;
 
             _JsonSource = jsonSource;
-            _Serializer = new JavaScriptSerializer();
+            _Serializer = serializer;
         }
 
         public Realm GetSingleRealm(string name)
@@ -47,28 +48,43 @@ namespace WowDotNetAPI.Explorers.Explorers
         public RealmList GetRealmsByType(string type)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
-            realmList.FilterByType(type);
+            realmList = new RealmList() { realms = realmList.realms.WithType(type) };
             return realmList;
         }
 
         public RealmList GetRealmsByPopulation(string population)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
-            realmList.FilterByPopulation(population);
+            realmList = new RealmList() { realms = realmList.realms.WithPopulation(population) };
             return realmList;
         }
 
         public RealmList GetRealmsByStatus(bool status)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
-            realmList.FilterByStatus(status);
+            if (status)
+            {
+                realmList = new RealmList() { realms = realmList.realms.WhereUp() };
+            }
+            else
+            {
+                realmList = new RealmList() { realms = realmList.realms.WhereDown() };
+            }
             return realmList;
         }
 
         public RealmList GetRealmsByQueue(bool queue)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
-            realmList.FilterByQueue(queue);
+            if (queue)
+            {
+                realmList = new RealmList() { realms = realmList.realms.WithQueue() };
+            }
+            else
+            {
+                realmList = new RealmList() { realms = realmList.realms.WithoutQueue() };
+            }
+
             return realmList;
         }
 
