@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace WowDotNetAPI
 {
-    public class JsonSource : IJsonSource
+    public class JsonSource : JsonSourceBase
     {
-        public string GetJson(string url)
+        public override string GetJsonFromSanitizedUrl(string sanitizedUrl)
         {
-            var request = WebRequest.Create(url);
+            var request = WebRequest.Create(sanitizedUrl);
 
             WebResponse response = request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());

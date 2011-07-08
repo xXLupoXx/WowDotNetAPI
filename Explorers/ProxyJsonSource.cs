@@ -7,7 +7,7 @@ using System.IO;
 
 namespace WowDotNetAPI
 {
-    public class ProxyJsonSource : IJsonSource
+    public class ProxyJsonSource : JsonSourceBase
     {
         private readonly string proxyPassword;
         private readonly string proxyUrl;
@@ -20,9 +20,9 @@ namespace WowDotNetAPI
             this.proxyUser = proxyUser;
         }
 
-        public string GetJson(string url)
+        public override string GetJsonFromSanitizedUrl(string sanitizedUrl)
         {
-            var request = WebRequest.Create(url);
+            var request = WebRequest.Create(sanitizedUrl);
 
             WebProxy proxy = new WebProxy(this.proxyUrl);
             proxy.Credentials = new NetworkCredential(this.proxyUser, this.proxyPassword);
