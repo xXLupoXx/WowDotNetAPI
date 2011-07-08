@@ -49,18 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterExplorer.cs" />
     <Compile Include="Comparers\RealmNameComparer.cs" />
-    <Compile Include="Explorers\CharacterExplorer.cs" />
-    <Compile Include="Explorers\OptionalFields\CharacterFields.cs" />
-    <Compile Include="Explorers\OptionalFields\GuildFields.cs" />
-    <Compile Include="Explorers\RealmExplorer.cs" />
     <Compile Include="Extensions\RealmExtensions.cs" />
-    <Compile Include="IJsonSource.cs" />
     <Compile Include="Interfaces\ICharacterExplorer.cs" />
+    <Compile Include="Interfaces\IJsonSource.cs" />
     <Compile Include="Interfaces\IRealmExplorer.cs" />
     <Compile Include="JsonSource.cs" />
     <Compile Include="JsonSourceBase.cs" />
+    <Compile Include="Models\BlizzardAPIError.cs" />
     <Compile Include="Models\RealmList.cs" />
+    <Compile Include="OptionalFields\CharacterFields.cs" />
+    <Compile Include="OptionalFields\GuildFields.cs" />
     <Compile Include="ProxyJsonSource.cs" />
     <Compile Include="Models\GuildAchievement.cs" />
     <Compile Include="Models\Achievements.cs" />
@@ -97,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Realm.cs" />
     <Compile Include="Comparers\RealmComparer.cs" />
+    <Compile Include="RealmExplorer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

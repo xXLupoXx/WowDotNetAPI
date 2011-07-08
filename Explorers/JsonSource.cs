@@ -8,15 +8,15 @@ using System.Text.RegularExpressions;
 
 namespace WowDotNetAPI
 {
-    public class JsonSource : JsonSourceBase
-    {
-        public override string GetJsonFromSanitizedUrl(string sanitizedUrl)
-        {
-            var request = WebRequest.Create(sanitizedUrl);
+	public class JsonSource : JsonSourceBase
+	{
+		public override string GetJsonFromSanitizedUrl(string sanitizedUrl)
+		{
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sanitizedUrl);
 
-            WebResponse response = request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            return reader.ReadToEnd();
-        }
-    }
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			StreamReader reader = new StreamReader(response.GetResponseStream());
+			return reader.ReadToEnd();
+		}
+	}
 }
