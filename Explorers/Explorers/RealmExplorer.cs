@@ -32,7 +32,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 			this.HasProxy = false;
 		}
 
-		public RealmExplorer(String proxyUser, String proxyPassword, String proxyURL) : this("us")
+		public RealmExplorer(string proxyUser, string proxyPassword, string proxyURL)
+			: this("us")
 		{
 			this.ProxyUser = proxyUser;
 			this.ProxyPassword = proxyPassword;
@@ -40,7 +41,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 			this.HasProxy = true;
 		}
 
-		public RealmExplorer(String region, String proxyUser, String proxyPassword, String proxyURL) : this(region)
+		public RealmExplorer(string region, string proxyUser, string proxyPassword, string proxyURL)
+			: this(region)
 		{
 			this.ProxyUser = proxyUser;
 			this.ProxyPassword = proxyPassword;
@@ -96,7 +98,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 			var query = "?realm=" + names[0];
 			for (int i = 1; i < names.Length; i++)
 			{
-				query += "&realm=" + names[i];
+				query += "," + names[i];
 			}
 
 			return GetMultipleRealmsViaQuery(query);
