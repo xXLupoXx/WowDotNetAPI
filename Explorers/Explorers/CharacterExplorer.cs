@@ -25,6 +25,7 @@ namespace WowDotNetAPI.Explorers.Explorers
         {
             if (region == null) throw new ArgumentNullException("region");
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
+            if (serializer == null) throw new ArgumentNullException("serializer");
 
             this.Region = region;
 
