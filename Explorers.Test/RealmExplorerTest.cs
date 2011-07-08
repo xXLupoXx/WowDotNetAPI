@@ -270,13 +270,6 @@ namespace Explorers.Test
 		}
 
 		[TestMethod]
-		public void Get_Realms_Using_Invalid_Realm_Name_In_Query_Returns_Null()
-		{
-			var realmList = realmExplorer.GetMultipleRealmsViaQuery("?realm=!!adfasdza...12");
-			Assert.IsNull(realmList);
-		}
-
-		[TestMethod]
 		public void Get_Realms_Using_Sending_Null_String_List_Returns_Empty_Lists()
 		{
 			string nullRealmNameString = null;
