@@ -15,9 +15,8 @@ namespace WowDotNetAPI.Explorers.Explorers
         private const string baseCharacterAPIurlWithFields = "http://{0}.battle.net/api/wow/character/{1}/{2}?fields={3}";
 
         private readonly IJsonSource jsonSource;
+        private readonly string region;
         private readonly JavaScriptSerializer serializer;
-
-        string Region { get; set; }
 
         public CharacterExplorer(IJsonSource jsonSource) : this("us", jsonSource, new JavaScriptSerializer()) { }
 
@@ -27,7 +26,7 @@ namespace WowDotNetAPI.Explorers.Explorers
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
             if (serializer == null) throw new ArgumentNullException("serializer");
 
-            this.Region = region;
+            this.region = region;
 
             this.jsonSource = jsonSource;
             this.serializer = serializer;
@@ -39,11 +38,11 @@ namespace WowDotNetAPI.Explorers.Explorers
             if (optionalFields != null && optionalFields.Length > 0)
             {
                 var optionalFieldList = String.Join(",", optionalFields);
-                url = string.Format(baseCharacterAPIurlWithFields, Region, realm, name, optionalFieldList);
+                url = string.Format(baseCharacterAPIurlWithFields, this.region, realm, name, optionalFieldList);
             }
             else
             {
-                url = string.Format(baseCharacterAPIurl, Region, realm, name);
+                url = string.Format(baseCharacterAPIurl, this.region, realm, name);
             }
 
             var json = jsonSource.GetJson(url);

@@ -60,6 +60,7 @@
     <Compile Include="Interfaces\IRealmExplorer.cs" />
     <Compile Include="JsonSource.cs" />
     <Compile Include="JsonSourceBase.cs" />
+    <Compile Include="Models\RealmList.cs" />
     <Compile Include="ProxyJsonSource.cs" />
     <Compile Include="Models\GuildAchievement.cs" />
     <Compile Include="Models\Achievements.cs" />

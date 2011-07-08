@@ -9,34 +9,34 @@ namespace WowDotNetAPI.Explorers.Extensions
 {
     static class RealmExtensions
     {
-        public static IEnumerable<Realm> WithQueue(this IEnumerable<Realm> source)
+        public static RealmList WithQueue(this RealmList source)
         {
-            return source.Where(r => r.queue);
+            return new RealmList() { realms = source.realms.Where(r => r.queue) };
         }
 
-        public static IEnumerable<Realm> WithoutQueue(this IEnumerable<Realm> source)
+        public static RealmList WithoutQueue(this RealmList source)
         {
-            return source.Where(r => !r.queue);
+            return new RealmList() { realms = source.realms.Where(r => !r.queue) };
         }
 
-        public static IEnumerable<Realm> WhereUp(this IEnumerable<Realm> source)
+        public static RealmList WhereUp(this RealmList source)
         {
-            return source.Where(r => r.status);
+            return new RealmList() { realms = source.realms.Where(r => r.status) };
         }
 
-        public static IEnumerable<Realm> WhereDown(this IEnumerable<Realm> source)
+        public static RealmList WhereDown(this RealmList source)
         {
-            return source.Where(r => !r.status);
+            return new RealmList() { realms = source.realms.Where(r => !r.status) };
         }
 
-        public static IEnumerable<Realm> WithPopulation(this IEnumerable<Realm> source, string population)
+        public static RealmList WithPopulation(this RealmList source, string population)
         {
-            return source.Where(r => r.population.Equals(population, StringComparison.InvariantCultureIgnoreCase));
+            return new RealmList() { realms = source.realms.Where(r => r.population.Equals(population, StringComparison.InvariantCultureIgnoreCase)) };
         }
 
-        public static IEnumerable<Realm> WithType(this IEnumerable<Realm> source, string realmType)
+        public static RealmList WithType(this RealmList source, string realmType)
         {
-            return source.Where(r => r.type.Equals(realmType, StringComparison.InvariantCultureIgnoreCase));
+            return new RealmList() { realms = source.realms.Where(r => r.type.Equals(realmType, StringComparison.InvariantCultureIgnoreCase)) };
         }
     }
 }

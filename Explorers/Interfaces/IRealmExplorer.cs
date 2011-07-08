@@ -12,25 +12,25 @@ namespace WowDotNetAPI.Explorers.Interfaces
 		Realm GetSingleRealm(string name);
 		string GetSingleRealmAsJson(string name);
 
-		IEnumerable<Realm> GetAllRealms();
+        RealmList GetAllRealms();
 		string GetAllRealmsAsJson();
 
-		IEnumerable<Realm> GetRealmsByType(string type);
+        RealmList GetRealmsByType(string type);
 		string GetRealmsByTypeAsJson(string type);
 
-		IEnumerable<Realm> GetRealmsByPopulation(string population);
+        RealmList GetRealmsByPopulation(string population);
 		string GetRealmsByPopulationAsJson(string population);
 
-		IEnumerable<Realm> GetRealmsByStatus(bool status);
+        RealmList GetRealmsByStatus(bool status);
 		string GetRealmsByStatusAsJson(bool status);
 
-		IEnumerable<Realm> GetRealmsByQueue(bool queue);
+        RealmList GetRealmsByQueue(bool queue);
 		string GetRealmsByQueueAsJson(bool queue);
 
-		IEnumerable<Realm> GetMultipleRealms(params string[] names);
+        RealmList GetMultipleRealms(params string[] names);
 		string GetMultipleRealmsAsJson(params string[] names);
 
-		IEnumerable<Realm> GetMultipleRealmsViaQuery(string query);
+        RealmList GetMultipleRealmsViaQuery(string query);
 		string GetRealmsViaQueryAsJson(string query);
 	}
 }

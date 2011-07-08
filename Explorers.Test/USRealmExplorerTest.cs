@@ -38,7 +38,7 @@ namespace Explorers.Test
 
             Assert.IsTrue(realmListFromJson.Count() == 2);
             Assert.IsTrue(allCollectedRealmsAreValid);
-            Assert.IsTrue(Enumerable.SequenceEqual(realmList, realmListFromJson, this.RealmComparer));
+            Assert.IsTrue(Enumerable.SequenceEqual(realmList.realms, realmListFromJson, this.RealmComparer));
         }
 
         [TestMethod]
@@ -46,12 +46,12 @@ namespace Explorers.Test
         {
             var realmList = this.RealmExplorer.GetMultipleRealmsViaQuery("?realm=Medivh&realm=Blackrock");
 
-            var allCollectedRealmsAreValid = realmList.Any() &&
-                realmList.All(r => r.name.Equals("Medivh", StringComparison.InvariantCultureIgnoreCase)
+            var allCollectedRealmsAreValid = realmList.realms.Any() &&
+                realmList.realms.All(r => r.name.Equals("Medivh", StringComparison.InvariantCultureIgnoreCase)
                     || r.name.Equals("Blackrock", StringComparison.InvariantCultureIgnoreCase));
 
 
-            Assert.IsTrue(realmList.Count() == 2);
+            Assert.IsTrue(realmList.realms.Count() == 2);
             Assert.IsTrue(allCollectedRealmsAreValid);
         }
     }
