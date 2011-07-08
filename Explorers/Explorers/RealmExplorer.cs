@@ -102,11 +102,12 @@ namespace WowDotNetAPI.Explorers.Explorers
 
 		public RealmList GetMultipleRealmsViaQuery(string query)
 		{
-			if (string.IsNullOrEmpty(query)) return null;
+            if (string.IsNullOrEmpty(query)) throw new ArgumentException("Value must not be null or empty.", "query");
 
 			try
 			{
-				return GetRealmData(string.Format(baseRealmAPIurl, Region, query));
+                var url = string.Format(baseRealmAPIurl, Region, query);
+				return GetRealmData(url);
 			}
 			catch
 			{
