@@ -36,22 +36,17 @@ namespace WowDotNetAPI.Explorers.Explorers
         {
             string url;
             if (optionalFields != null && optionalFields.Length > 0)
-                url = string.Format(baseCharacterAPIurlWithFields, Region, realm, name, GetOptionalFieldList(optionalFields));
+            {
+                var optionalFieldList = String.Join(",", optionalFields);
+                url = string.Format(baseCharacterAPIurlWithFields, Region, realm, name, optionalFieldList);
+            }
             else
+            {
                 url = string.Format(baseCharacterAPIurl, Region, realm, name);
+            }
 
             var json = _JsonSource.GetJson(url);
             return _Serializer.Deserialize<Character>(json);
-        }
-
-        private string GetOptionalFieldList(string[] optionalFields)
-        {
-            string fieldList = optionalFields[0];
-
-            for (int i = 1; i < optionalFields.Length; i++)
-                fieldList += "," + optionalFields[i];
-
-            return fieldList;
         }
     }
 }
