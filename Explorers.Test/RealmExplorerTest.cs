@@ -67,7 +67,7 @@ namespace Explorers.Test
 			var realmsJson = realmExplorer.GetRealmsByTypeAsJson("pvp");
 
 			var jsonObjects = (Dictionary<string, object>)(jsSerializer.DeserializeObject(realmsJson));
-			var realmListFromJson = jsSerializer.ConvertToType<IEnumerable<Realm>>(jsonObjects["realms"]);
+			var realmListFromJson = jsSerializer.ConvertToType<List<Realm>>(jsonObjects["realms"]);
 
 			var allCollectedRealmsArePvp = realmListFromJson.Any() &&
 				realmListFromJson.All(r => r.type.Equals("pvp", StringComparison.InvariantCultureIgnoreCase));
@@ -83,7 +83,7 @@ namespace Explorers.Test
 			var realmsJson = realmExplorer.GetRealmsByTypeAsJson("pve");
 
 			var jsonObjects = (Dictionary<string, object>)(jsSerializer.DeserializeObject(realmsJson));
-			var realmListFromJson = jsSerializer.ConvertToType<IEnumerable<Realm>>(jsonObjects["realms"]);
+			var realmListFromJson = jsSerializer.ConvertToType<List<Realm>>(jsonObjects["realms"]);
 
 			var allCollectedRealmsArePve = realmListFromJson
 				.All(r => r.type.Equals("pve", StringComparison.InvariantCultureIgnoreCase));
