@@ -37,64 +37,64 @@ namespace WowDotNetAPI.Explorers.Explorers
         public Realm GetSingleRealm(string name)
         {
             var realmList = GetMultipleRealms(name);
-            return realmList == null ? null : realmList.realms.FirstOrDefault();
+            return realmList == null ? null : realmList.FirstOrDefault();
         }
 
-        public RealmList GetAllRealms()
+        public IEnumerable<Realm> GetAllRealms()
         {
             return GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
         }
 
-        public RealmList GetRealmsByType(string type)
+        public IEnumerable<Realm> GetRealmsByType(string type)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
-            realmList = new RealmList() { realms = realmList.realms.WithType(type) };
+            realmList = realmList.WithType(type);
             return realmList;
         }
 
-        public RealmList GetRealmsByPopulation(string population)
+        public IEnumerable<Realm> GetRealmsByPopulation(string population)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
-            realmList = new RealmList() { realms = realmList.realms.WithPopulation(population) };
+            realmList = realmList.WithPopulation(population);
             return realmList;
         }
 
-        public RealmList GetRealmsByStatus(bool status)
+        public IEnumerable<Realm> GetRealmsByStatus(bool status)
         {
             var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
             if (status)
             {
-                realmList = new RealmList() { realms = realmList.realms.WhereUp() };
+                realmList = realmList.WhereUp();
             }
             else
             {
-                realmList = new RealmList() { realms = realmList.realms.WhereDown() };
+                realmList = realmList.WhereDown();
             }
             return realmList;
         }
 
-        public RealmList GetRealmsByQueue(bool queue)
+        public IEnumerable<Realm> GetRealmsByQueue(bool queue)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
+            var realmList = this.GetRealmData(string.Format(baseRealmAPIurl, Region, string.Empty));
             if (queue)
             {
-                realmList = new RealmList() { realms = realmList.realms.WithQueue() };
+                realmList = realmList.WithQueue();
             }
             else
             {
-                realmList = new RealmList() { realms = realmList.realms.WithoutQueue() };
+                realmList = realmList.WithoutQueue();
             }
 
             return realmList;
         }
 
-        public RealmList GetMultipleRealms(params string[] names)
+        public IEnumerable<Realm> GetMultipleRealms(params string[] names)
         {
             if (names == null
                 || names.Length == 0
                 || names.Any(r => r == null))
             {
-                return new RealmList();
+                return Enumerable.Empty<Realm>();
             }
 
             var query = "?realms=" + String.Join(",", names);
@@ -102,7 +102,7 @@ namespace WowDotNetAPI.Explorers.Explorers
             return GetMultipleRealmsViaQuery(query);
         }
 
-        public RealmList GetMultipleRealmsViaQuery(string query)
+        public IEnumerable<Realm> GetMultipleRealmsViaQuery(string query)
         {
             if (string.IsNullOrEmpty(query)) throw new ArgumentException("Value must not be null or empty.", "query");
 
@@ -159,16 +159,17 @@ namespace WowDotNetAPI.Explorers.Explorers
             return _JsonSource.GetJson(url);
         }
 
-        private string ConvertRealmListToJson(RealmList realmList)
+        private string ConvertRealmListToJson(IEnumerable<Realm> realmList)
         {
             return _Serializer.Serialize(realmList);
         }
 
-        public RealmList GetRealmData(string url)
+        public IEnumerable<Realm> GetRealmData(string url)
         {
             var sanitizedUrl = this.SanitizeUrl(url);
             var json = _JsonSource.GetJson(sanitizedUrl);
-            return _Serializer.Deserialize<RealmList>(json);
+            var dictionary = _Serializer.Deserialize<Dictionary<string, List<Realm>>>(json);
+            return dictionary["realms"];
         }
 
         //Todo: Improve URL sanitizer

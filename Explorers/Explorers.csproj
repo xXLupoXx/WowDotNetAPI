@@ -86,7 +86,6 @@
     <Compile Include="Models\Race.cs" />
     <Compile Include="Models\RaceList.cs" />
     <Compile Include="Models\Raid.cs" />
-    <Compile Include="Models\RealmList.cs" />
     <Compile Include="Models\Reputation.cs" />
     <Compile Include="Models\CharacterStats.cs" />
     <Compile Include="Models\CharacterTalentSpecialization.cs" />
