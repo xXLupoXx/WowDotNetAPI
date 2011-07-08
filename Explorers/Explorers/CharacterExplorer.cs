@@ -28,8 +28,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 
             this.Region = region;
 
-            jsonSource = jsonSource;
-            serializer = serializer;
+            this.jsonSource = jsonSource;
+            this.serializer = serializer;
         }
 
         public Character GetSingleCharacter(string name, string realm, params string[] optionalFields)

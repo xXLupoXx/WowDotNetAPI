@@ -30,9 +30,9 @@ namespace WowDotNetAPI.Explorers.Explorers
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
             if (serializer == null) throw new ArgumentNullException("serializer");
 
-            region = region;
-            jsonSource = jsonSource;
-            serializer = serializer;
+            this.region = region;
+            this.jsonSource = jsonSource;
+            this.serializer = serializer;
         }
 
         public Realm GetSingleRealm(string name)

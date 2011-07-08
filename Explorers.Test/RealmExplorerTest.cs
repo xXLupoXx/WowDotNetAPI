@@ -23,12 +23,12 @@ namespace Explorers.Test
 
         public RealmExplorerTest(string region, int expectedRealmCount, params string[] expectedRealmNames)
         {
-            expectedRealmCount = expectedRealmCount;
-            expectedRealmNames = expectedRealmNames;
-            region = region;
+            this.expectedRealmCount = expectedRealmCount;
+            this.expectedRealmNames = expectedRealmNames;
+            this.region = region;
             var jsonSource = new WowDotNetAPI.JsonSource();
-            realmExplorer = new RealmExplorer(region, jsonSource);
-            serializer = new JavaScriptSerializer();
+            this.realmExplorer = new RealmExplorer(region, jsonSource);
+            this.serializer = new JavaScriptSerializer();
 
             this.RealmComparer = new RealmComparer();
             this.RealmNameComparer = new RealmNameComparer();
