@@ -95,12 +95,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 				|| names.Length == 0
 				|| names.Any(r => r == null)) return null;
 
-			var query = "?realm=" + names[0];
-			for (int i = 1; i < names.Length; i++)
-			{
-				query += "," + names[i];
-			}
-
+            var query = "?realm=" + String.Join(",", names);
+			
 			return GetMultipleRealmsViaQuery(query);
 		}
 
