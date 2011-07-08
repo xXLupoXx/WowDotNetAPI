@@ -53,9 +53,12 @@
     <Compile Include="Explorers\OptionalFields\CharacterFields.cs" />
     <Compile Include="Explorers\OptionalFields\GuildFields.cs" />
     <Compile Include="Explorers\RealmExplorer.cs" />
+    <Compile Include="IJsonSource.cs" />
     <Compile Include="Interfaces\ICharacterExplorer.cs" />
     <Compile Include="Interfaces\IExplorer.cs" />
     <Compile Include="Interfaces\IRealmExplorer.cs" />
+    <Compile Include="JsonSource.cs" />
+    <Compile Include="ProxyJsonSource.cs" />
     <Compile Include="Models\GuildAchievement.cs" />
     <Compile Include="Models\Achievements.cs" />
     <Compile Include="Models\CharacterAppearance.cs" />

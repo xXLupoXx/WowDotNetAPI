@@ -15,31 +15,22 @@ namespace WowDotNetAPI.Explorers.Explorers
     {
         private const string baseRealmAPIurl = "http://{0}.battle.net/api/wow/realm/status{1}";
 
+        private readonly IJsonSource _JsonSource;
+        private readonly JavaScriptSerializer _Serializer;
+
         public string Region { get; set; }
-        public JavaScriptSerializer Serializer { get; set; }
-        public WebRequest Request { get; set; }
-        public string ProxyURL { get; set; }
-        public string ProxyUser { get; set; }
-        public string ProxyPassword { get; set; }
-        public bool HasProxy { get; set; }
 
-        public RealmExplorer() : this("us", null, null, null, false) { }
+        public RealmExplorer(IJsonSource jsonSource) : this("us", jsonSource) { }
 
-        public RealmExplorer(string region) : this(region, null, null, null, false) { }
-
-        public RealmExplorer(string proxyUser, string proxyPassword, string proxyURL) : this("us", proxyUser, proxyPassword, proxyURL, true) { }
-
-        public RealmExplorer(string region, string proxyUser, string proxyPassword, string proxyURL, bool hasProxy)
+        public RealmExplorer(string region, IJsonSource jsonSource)
         {
             if (region == null) throw new ArgumentNullException("region");
+            if (jsonSource == null) throw new ArgumentNullException("jsonSource");
 
             this.Region = region;
-            this.ProxyUser = proxyUser;
-            this.ProxyPassword = proxyPassword;
-            this.ProxyURL = proxyURL;
-            this.HasProxy = hasProxy;
 
-            this.Serializer = new JavaScriptSerializer();
+            _JsonSource = jsonSource;
+            _Serializer = new JavaScriptSerializer();
         }
 
         public Realm GetSingleRealm(string name)
@@ -132,7 +123,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string GetAllRealmsAsJson()
         {
-            return GetJson(string.Format(baseRealmAPIurl, Region, string.Empty));
+            var url = string.Format(baseRealmAPIurl, Region, string.Empty);
+            return _JsonSource.GetJson(url);
         }
 
         public string GetSingleRealmAsJson(string name)
@@ -147,35 +139,20 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string GetRealmsViaQueryAsJson(string query)
         {
-            return GetJson(string.Format(baseRealmAPIurl, Region, query));
+            var url = string.Format(baseRealmAPIurl, Region, query);
+            return _JsonSource.GetJson(url);
         }
 
         private string ConvertRealmListToJson(RealmList realmList)
         {
-            return Serializer.Serialize(realmList);
+            return _Serializer.Serialize(realmList);
         }
 
         public RealmList GetRealmData(string url)
         {
             var sanitizedUrl = this.SanitizeUrl(url);
-            var json = this.GetJson(sanitizedUrl);
-            return this.Serializer.Deserialize<RealmList>(json);
-        }
-
-        private string GetJson(string url)
-        {
-            Request = WebRequest.Create(url);
-
-            if (HasProxy)
-            {
-                WebProxy proxy = new WebProxy(ProxyURL);
-                proxy.Credentials = new NetworkCredential(ProxyUser, ProxyPassword);
-                Request.Proxy = proxy;
-            }
-
-            WebResponse response = Request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            return reader.ReadToEnd();
+            var json = _JsonSource.GetJson(sanitizedUrl);
+            return _Serializer.Deserialize<RealmList>(json);
         }
 
         //Todo: Improve URL sanitizer
