@@ -49,7 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Explorers\CharacterExplorer.cs" />
+    <Compile Include="Explorers\OptionalFields\CharacterFields.cs" />
+    <Compile Include="Explorers\OptionalFields\GuildFields.cs" />
     <Compile Include="Explorers\RealmExplorer.cs" />
+    <Compile Include="Interfaces\ICharacterExplorer.cs" />
     <Compile Include="Interfaces\IExplorer.cs" />
     <Compile Include="Interfaces\IRealmExplorer.cs" />
     <Compile Include="Models\GuildAchievement.cs" />
