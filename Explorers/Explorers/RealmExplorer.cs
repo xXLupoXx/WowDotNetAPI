@@ -23,31 +23,23 @@ namespace WowDotNetAPI.Explorers.Explorers
         public string ProxyPassword { get; set; }
         public bool HasProxy { get; set; }
 
-        public RealmExplorer() : this("us") { }
+        public RealmExplorer() : this("us", null, null, null, false) { }
 
-        public RealmExplorer(string region)
+        public RealmExplorer(string region) : this(region, null, null, null, false) { }
+
+        public RealmExplorer(string proxyUser, string proxyPassword, string proxyURL) : this("us", proxyUser, proxyPassword, proxyURL, true) { }
+
+        public RealmExplorer(string region, string proxyUser, string proxyPassword, string proxyURL, bool hasProxy)
         {
+            if (region == null) throw new ArgumentNullException("region");
+
             this.Region = region;
+            this.ProxyUser = proxyUser;
+            this.ProxyPassword = proxyPassword;
+            this.ProxyURL = proxyURL;
+            this.HasProxy = hasProxy;
+
             this.Serializer = new JavaScriptSerializer();
-            this.HasProxy = false;
-        }
-
-        public RealmExplorer(string proxyUser, string proxyPassword, string proxyURL)
-            : this("us")
-        {
-            this.ProxyUser = proxyUser;
-            this.ProxyPassword = proxyPassword;
-            this.ProxyURL = proxyURL;
-            this.HasProxy = true;
-        }
-
-        public RealmExplorer(string region, string proxyUser, string proxyPassword, string proxyURL)
-            : this(region)
-        {
-            this.ProxyUser = proxyUser;
-            this.ProxyPassword = proxyPassword;
-            this.ProxyURL = proxyURL;
-            this.HasProxy = true;
         }
 
         public Realm GetSingleRealm(string name)
