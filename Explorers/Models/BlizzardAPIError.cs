@@ -5,8 +5,9 @@ using System.Text;
 
 namespace WowDotNetAPI.Explorers.Models
 {
-    public class RealmList
-    {
-        public IEnumerable<Realm> realms { get; set; }
-    }
+	public class BlizzardAPIError
+	{
+		public string status { get; set; }
+		public string reason { get; set; }
+	}
 }

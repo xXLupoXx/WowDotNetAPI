@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WowDotNetAPI.Explorers.Models;
 
 namespace Explorers.Test
 {
@@ -15,7 +16,7 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_Valid_KR_Realm_Returns_Unique_KR_Realm()
         {
-            var realm = this.RealmExplorer.GetSingleRealm("kul tiras");
+            Realm realm = this.RealmExplorer.GetSingleRealm("kul tiras");
 
             Assert.IsTrue(realm.name == "Kul Tiras");
             Assert.IsTrue(realm.type == "pvp");

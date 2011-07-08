@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WowDotNetAPI.Explorers.Explorers.OptionalFields
+namespace WowDotNetAPI.Explorers.OptionalFields
 {
 	public static class CharacterFields
 	{
