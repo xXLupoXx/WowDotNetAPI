@@ -15,27 +15,27 @@ namespace Explorers.Test
     [TestClass]
     public abstract class RealmExplorerTest
     {
-        private readonly int _ExpectedRealmCount;
-        private readonly string[] _ExpectedRealmNames;
-        private readonly JavaScriptSerializer _JsSerializer;
-        private readonly IRealmExplorer _RealmExplorer;
-        private readonly string _Region;
+        private readonly int expectedRealmCount;
+        private readonly string[] expectedRealmNames;
+        private readonly JavaScriptSerializer serializer;
+        private readonly IRealmExplorer realmExplorer;
+        private readonly string region;
 
         public RealmExplorerTest(string region, int expectedRealmCount, params string[] expectedRealmNames)
         {
-            _ExpectedRealmCount = expectedRealmCount;
-            _ExpectedRealmNames = expectedRealmNames;
-            _Region = region;
+            expectedRealmCount = expectedRealmCount;
+            expectedRealmNames = expectedRealmNames;
+            region = region;
             var jsonSource = new WowDotNetAPI.JsonSource();
-            _RealmExplorer = new RealmExplorer(region, jsonSource);
-            _JsSerializer = new JavaScriptSerializer();
+            realmExplorer = new RealmExplorer(region, jsonSource);
+            serializer = new JavaScriptSerializer();
 
             this.RealmComparer = new RealmComparer();
             this.RealmNameComparer = new RealmNameComparer();
         }
 
-        protected JavaScriptSerializer JsSerializer { get { return _JsSerializer; } }
-        protected IRealmExplorer RealmExplorer { get { return _RealmExplorer; } }
+        protected JavaScriptSerializer JsSerializer { get { return serializer; } }
+        protected IRealmExplorer RealmExplorer { get { return realmExplorer; } }
 
         public IEqualityComparer<Realm> RealmComparer { get; set; }
         public IEqualityComparer<string> RealmNameComparer { get; set; }
@@ -43,14 +43,14 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_Null_Realm_Returns_Null()
         {
-            var realm = _RealmExplorer.GetSingleRealm(null);
+            var realm = realmExplorer.GetSingleRealm(null);
             Assert.IsNull(realm);
         }
 
         [TestMethod]
         public void Get_All_Realms_By_Type_Returns_Pvp_Realms()
         {
-            var realmList = _RealmExplorer.GetRealmsByType("pvp");
+            var realmList = realmExplorer.GetRealmsByType("pvp");
             var allCollectedRealmsArePvp = realmList.Any() &&
                 realmList.All(r => r.type.Equals("pvp", StringComparison.InvariantCultureIgnoreCase));
 
@@ -60,10 +60,10 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Type_As_Json_Returns_Pvp_Realms_And_Validates_Comparison_With_Pvp_RealmList()
         {
-            IEnumerable<Realm> realmList = _RealmExplorer.GetRealmsByType("pvp");
-            var realmsJson = _RealmExplorer.GetRealmsByTypeAsJson("pvp");
+            IEnumerable<Realm> realmList = realmExplorer.GetRealmsByType("pvp");
+            var realmsJson = realmExplorer.GetRealmsByTypeAsJson("pvp");
 
-            IEnumerable<Realm> realmListFromJson = _JsSerializer.Deserialize<List<Realm>>(realmsJson);
+            IEnumerable<Realm> realmListFromJson = serializer.Deserialize<List<Realm>>(realmsJson);
 
             var allCollectedRealmsArePvp = realmListFromJson.Any() &&
                 realmListFromJson.All(r => r.type.Equals("pvp", StringComparison.InvariantCultureIgnoreCase));
@@ -75,10 +75,10 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Type_As_Json_Returns_Pve_Realms_And_Invalidates_Comparison_Againts_Pvp_RealmList()
         {
-            var realmList = _RealmExplorer.GetRealmsByType("pvp");
-            var realmsJson = _RealmExplorer.GetRealmsByTypeAsJson("pve");
+            var realmList = realmExplorer.GetRealmsByType("pvp");
+            var realmsJson = realmExplorer.GetRealmsByTypeAsJson("pve");
 
-            IEnumerable<Realm> realmListFromJson = _JsSerializer.Deserialize<List<Realm>>(realmsJson);
+            IEnumerable<Realm> realmListFromJson = serializer.Deserialize<List<Realm>>(realmsJson);
 
             var allCollectedRealmsArePve = realmListFromJson
                 .All(r => r.type.Equals("pve", StringComparison.InvariantCultureIgnoreCase));
@@ -90,7 +90,7 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Status_Returns_Realms_That_Are_Up()
         {
-            var realmList = _RealmExplorer.GetRealmsByStatus(true);
+            var realmList = realmExplorer.GetRealmsByStatus(true);
 
             //All servers being down is likely(maintenance) and will cause test to fail
             var allCollectedRealmsAreUp = realmList.Any() &&
@@ -102,10 +102,10 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Status_As_Json_Returns_Online_Realms_And_Validates_Comparison_With_Online_Only_RealmList()
         {
-            var realmList = _RealmExplorer.GetRealmsByStatus(true);
-            var realmsJson = _RealmExplorer.GetRealmsByStatusAsJson(true);
+            var realmList = realmExplorer.GetRealmsByStatus(true);
+            var realmsJson = realmExplorer.GetRealmsByStatusAsJson(true);
 
-            IEnumerable<Realm> realmListFromJson = _JsSerializer.Deserialize<List<Realm>>(realmsJson);
+            IEnumerable<Realm> realmListFromJson = serializer.Deserialize<List<Realm>>(realmsJson);
 
             //All servers being down is likely(maintenance) and will cause test to fail
             var allCollectedRealmsAreOnline = realmListFromJson.Any() &&
@@ -118,7 +118,7 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Queue_Returns_Realms_That_Do_Not_Have_Queues()
         {
-            var realmList = _RealmExplorer.GetRealmsByQueue(false);
+            var realmList = realmExplorer.GetRealmsByQueue(false);
 
             //All servers getting queues is unlikely but possible and will cause test to fail
             var allCollectedRealmsHaveQueues = realmList.Any() &&
@@ -130,10 +130,10 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Queue_As_Json_Returns_Realms_That_Do_Not_Have_Queues_And_Validates_Comparison_With_Queue_Only_RealmList()
         {
-            var realmList = _RealmExplorer.GetRealmsByQueue(false);
-            var realmsJson = _RealmExplorer.GetRealmsByQueueAsJson(false);
+            var realmList = realmExplorer.GetRealmsByQueue(false);
+            var realmsJson = realmExplorer.GetRealmsByQueueAsJson(false);
 
-            var realmListFromJson = _JsSerializer.Deserialize<List<Realm>>(realmsJson);
+            var realmListFromJson = serializer.Deserialize<List<Realm>>(realmsJson);
 
             //All servers getting queues is unlikely but possible and will cause test to fail
             var allCollectedRealmsDoNotHaveQueues = realmListFromJson.Any() &&
@@ -146,7 +146,7 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Population_Returns_Realms_That_Have_Low_Population()
         {
-            var realmList = _RealmExplorer.GetRealmsByPopulation("low");
+            var realmList = realmExplorer.GetRealmsByPopulation("low");
             var allCollectedRealmsHaveLowPopulation = realmList.Any() &&
                 realmList.All(r => r.population.Equals("low", StringComparison.InvariantCultureIgnoreCase));
 
@@ -156,10 +156,10 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_All_Realms_By_Population_As_Json_Returns_MedPop_Realms_And_Validates_Comparison_With_MedPop_Only_RealmList()
         {
-            var realmList = _RealmExplorer.GetRealmsByPopulation("medium");
-            var realmsJson = _RealmExplorer.GetRealmsByPopulationAsJson("medium");
+            var realmList = realmExplorer.GetRealmsByPopulation("medium");
+            var realmsJson = realmExplorer.GetRealmsByPopulationAsJson("medium");
 
-            IEnumerable<Realm> realmListFromJson = _JsSerializer.Deserialize<IEnumerable<Realm>>(realmsJson);
+            IEnumerable<Realm> realmListFromJson = serializer.Deserialize<IEnumerable<Realm>>(realmsJson);
 
             //All servers getting queues is unlikely but possible and will cause test to fail
             var allCollectedRealmsHaveMedPopulation = realmListFromJson.Any() &&
@@ -172,24 +172,24 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_Realms_Using_Multiple_ValidNames_Query_Returns_Valid_Results()
         {
-            var realmList = _RealmExplorer.GetMultipleRealms(_ExpectedRealmNames);
+            var realmList = realmExplorer.GetMultipleRealms(expectedRealmNames);
 
             var allCollectedRealmsAreValid = realmList.Any() &&
-                realmList.All(r => _ExpectedRealmNames.Contains(r.name, this.RealmNameComparer));
+                realmList.All(r => expectedRealmNames.Contains(r.name, this.RealmNameComparer));
 
-            Assert.IsTrue(realmList.Count() == _ExpectedRealmNames.Count());
+            Assert.IsTrue(realmList.Count() == expectedRealmNames.Count());
             Assert.IsTrue(allCollectedRealmsAreValid);
         }
 
         [TestMethod]
         public void Get_Realms_Using_Multiple_InvalidNames_Query_Returns_One_Valid_Result()
         {
-            var correctRealm = _ExpectedRealmNames.First();
+            var correctRealm = expectedRealmNames.First();
 
-            var realmList = _RealmExplorer.GetMultipleRealms(correctRealm, "AZUZU!", "dekuz");
+            var realmList = realmExplorer.GetMultipleRealms(correctRealm, "AZUZU!", "dekuz");
 
             var allCollectedRealmsAreValid = realmList.Any() &&
-                realmList.All(r => _ExpectedRealmNames.Contains(r.name, this.RealmNameComparer));
+                realmList.All(r => expectedRealmNames.Contains(r.name, this.RealmNameComparer));
 
             Assert.IsTrue(realmList.Count() == 1);
             Assert.IsTrue(allCollectedRealmsAreValid);
@@ -198,12 +198,12 @@ namespace Explorers.Test
         [TestMethod]
         public void Get_Realms_Using_Multiple_ValidNamesArray_Query_Returns_Valid_Results()
         {
-            var realmList = _RealmExplorer.GetMultipleRealms(_ExpectedRealmNames);
+            var realmList = realmExplorer.GetMultipleRealms(expectedRealmNames);
 
             var allCollectedRealmsAreValid = realmList.Any() &&
-                realmList.All(r => _ExpectedRealmNames.Contains(r.name, this.RealmNameComparer));
+                realmList.All(r => expectedRealmNames.Contains(r.name, this.RealmNameComparer));
 
-            Assert.IsTrue(realmList.Count() == _ExpectedRealmNames.Count());
+            Assert.IsTrue(realmList.Count() == expectedRealmNames.Count());
             Assert.IsTrue(allCollectedRealmsAreValid);
         }
 
@@ -213,27 +213,27 @@ namespace Explorers.Test
             string nullRealmNameString = null;
             string[] nullRealmNameStringArray = null;
 
-            var realmList = _RealmExplorer.GetMultipleRealms(nullRealmNameString);
+            var realmList = realmExplorer.GetMultipleRealms(nullRealmNameString);
             Assert.IsTrue(realmList.Count() == 0);
 
-            realmList = _RealmExplorer.GetMultipleRealms(nullRealmNameStringArray);
+            realmList = realmExplorer.GetMultipleRealms(nullRealmNameStringArray);
             Assert.IsTrue(realmList.Count() == 0);
         }
 
         [TestMethod]
         public void Get_Realms_Using_Garbage_Query_Still_Returns_All_Realms()
         {
-            var realmList = _RealmExplorer.GetMultipleRealmsViaQuery("?asdf2&asdf");
+            var realmList = realmExplorer.GetMultipleRealmsViaQuery("?asdf2&asdf");
 
             Assert.IsNotNull(realmList);
-            Assert.IsTrue(realmList.Count() >= _ExpectedRealmCount);
+            Assert.IsTrue(realmList.Count() >= expectedRealmCount);
         }
 
         [TestMethod]
         public void GetAll_Realms_Returns_All_Realms()
         {
-            var realmList = _RealmExplorer.GetAllRealms();
-            Assert.IsTrue(realmList.Count() >= _ExpectedRealmCount);
+            var realmList = realmExplorer.GetAllRealms();
+            Assert.IsTrue(realmList.Count() >= expectedRealmCount);
         }
 
         [TestMethod, ExpectedException(typeof(WebException), "The remote name could not be resolved: 'foo.battle.net'")]

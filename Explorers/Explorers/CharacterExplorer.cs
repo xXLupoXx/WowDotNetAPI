@@ -14,8 +14,8 @@ namespace WowDotNetAPI.Explorers.Explorers
         private const string baseCharacterAPIurl = "http://{0}.battle.net/api/wow/character/{1}/{2}";
         private const string baseCharacterAPIurlWithFields = "http://{0}.battle.net/api/wow/character/{1}/{2}?fields={3}";
 
-        private readonly IJsonSource _JsonSource;
-        private readonly JavaScriptSerializer _Serializer;
+        private readonly IJsonSource jsonSource;
+        private readonly JavaScriptSerializer serializer;
 
         string Region { get; set; }
 
@@ -28,8 +28,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 
             this.Region = region;
 
-            _JsonSource = jsonSource;
-            _Serializer = serializer;
+            jsonSource = jsonSource;
+            serializer = serializer;
         }
 
         public Character GetSingleCharacter(string name, string realm, params string[] optionalFields)
@@ -45,8 +45,8 @@ namespace WowDotNetAPI.Explorers.Explorers
                 url = string.Format(baseCharacterAPIurl, Region, realm, name);
             }
 
-            var json = _JsonSource.GetJson(url);
-            return _Serializer.Deserialize<Character>(json);
+            var json = jsonSource.GetJson(url);
+            return serializer.Deserialize<Character>(json);
         }
     }
 }

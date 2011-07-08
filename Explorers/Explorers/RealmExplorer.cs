@@ -16,9 +16,9 @@ namespace WowDotNetAPI.Explorers.Explorers
     {
         private const string baseRealmAPIurl = "http://{0}.battle.net/api/wow/realm/status{1}";
 
-        private readonly IJsonSource _JsonSource;
-        private readonly string _Region;
-        private readonly JavaScriptSerializer _Serializer;
+        private readonly IJsonSource jsonSource;
+        private readonly string region;
+        private readonly JavaScriptSerializer serializer;
 
         public RealmExplorer(IJsonSource jsonSource) : this("us", jsonSource, new JavaScriptSerializer()) { }
 
@@ -30,9 +30,9 @@ namespace WowDotNetAPI.Explorers.Explorers
             if (jsonSource == null) throw new ArgumentNullException("jsonSource");
             if (serializer == null) throw new ArgumentNullException("serializer");
 
-            _JsonSource = jsonSource;
-            _Region = region;
-            _Serializer = serializer;
+            region = region;
+            jsonSource = jsonSource;
+            serializer = serializer;
         }
 
         public Realm GetSingleRealm(string name)
@@ -43,26 +43,26 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public IEnumerable<Realm> GetAllRealms()
         {
-            return GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
+            return GetRealmData(string.Format(baseRealmAPIurl, region, string.Empty));
         }
 
         public IEnumerable<Realm> GetRealmsByType(string type)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
+            var realmList = GetRealmData(string.Format(baseRealmAPIurl, region, string.Empty));
             realmList = realmList.WithType(type);
             return realmList;
         }
 
         public IEnumerable<Realm> GetRealmsByPopulation(string population)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
+            var realmList = GetRealmData(string.Format(baseRealmAPIurl, region, string.Empty));
             realmList = realmList.WithPopulation(population);
             return realmList;
         }
 
         public IEnumerable<Realm> GetRealmsByStatus(bool status)
         {
-            var realmList = GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
+            var realmList = GetRealmData(string.Format(baseRealmAPIurl, region, string.Empty));
             if (status)
             {
                 realmList = realmList.WhereUp();
@@ -76,7 +76,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public IEnumerable<Realm> GetRealmsByQueue(bool queue)
         {
-            var realmList = this.GetRealmData(string.Format(baseRealmAPIurl, _Region, string.Empty));
+            var realmList = this.GetRealmData(string.Format(baseRealmAPIurl, region, string.Empty));
             if (queue)
             {
                 realmList = realmList.WithQueue();
@@ -109,7 +109,7 @@ namespace WowDotNetAPI.Explorers.Explorers
 
             try
             {
-                var url = string.Format(baseRealmAPIurl, _Region, query);
+                var url = string.Format(baseRealmAPIurl, region, query);
                 return GetRealmData(url);
             }
             catch
@@ -140,8 +140,8 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string GetAllRealmsAsJson()
         {
-            var url = string.Format(baseRealmAPIurl, _Region, string.Empty);
-            return _JsonSource.GetJson(url);
+            var url = string.Format(baseRealmAPIurl, region, string.Empty);
+            return jsonSource.GetJson(url);
         }
 
         public string GetSingleRealmAsJson(string name)
@@ -156,20 +156,20 @@ namespace WowDotNetAPI.Explorers.Explorers
 
         public string GetRealmsViaQueryAsJson(string query)
         {
-            var url = string.Format(baseRealmAPIurl, _Region, query);
-            return _JsonSource.GetJson(url);
+            var url = string.Format(baseRealmAPIurl, region, query);
+            return jsonSource.GetJson(url);
         }
 
         private string ConvertRealmListToJson(IEnumerable<Realm> realmList)
         {
-            return _Serializer.Serialize(realmList);
+            return serializer.Serialize(realmList);
         }
 
         public IEnumerable<Realm> GetRealmData(string url)
         {
             var sanitizedUrl = this.SanitizeUrl(url);
-            var json = _JsonSource.GetJson(sanitizedUrl);
-            var dictionary = _Serializer.Deserialize<Dictionary<string, List<Realm>>>(json);
+            var json = jsonSource.GetJson(sanitizedUrl);
+            var dictionary = serializer.Deserialize<Dictionary<string, List<Realm>>>(json);
             return dictionary["realms"];
         }
 
