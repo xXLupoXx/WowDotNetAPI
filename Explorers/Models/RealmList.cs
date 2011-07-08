@@ -7,7 +7,12 @@ namespace WowDotNetAPI.Explorers.Models
 {
 	public class RealmList
 	{
-		public IEnumerable<Realm> realms { get; set; }
+        public RealmList()
+        {
+            this.realms = new List<Realm>();
+        }
+
+        public IEnumerable<Realm> realms { get; set; }
 		
 		public void FilterByQueue(bool queue)
 		{
