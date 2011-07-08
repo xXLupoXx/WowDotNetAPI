@@ -44,13 +44,6 @@ namespace Explorers.Test
 		}
 
 		[TestMethod]
-		public void Get_Invalid_US_Realm_Returns_Null()
-		{
-			var realm = realmExplorer.GetSingleRealm("dekuz");
-			Assert.IsNull(realm);
-		}
-
-		[TestMethod]
 		public void Get_Null_US_Realm_Returns_Null()
 		{
 			var realm = realmExplorer.GetSingleRealm(null);
@@ -311,14 +304,6 @@ namespace Explorers.Test
 			Assert.IsTrue(realm.slug == "drekthar");
 		}
 
-		[TestMethod]
-		public void Get_Invalid_EU_Realm_Returns_Null()
-		{
-			realmExplorer.Region = "eu";
-			var realm = realmExplorer.GetSingleRealm("dekuz");
-			Assert.IsNull(realm);
-		}
-
 		//KR - Korea; 33 realms as of 04/22/2011
 		[TestMethod]
 		public void GetAll_KR_Realms_Returns_All_KR_Realms()
@@ -337,14 +322,6 @@ namespace Explorers.Test
 			Assert.IsTrue(realm.name == "Kul Tiras");
 			Assert.IsTrue(realm.type == "pvp");
 			Assert.IsTrue(realm.slug == "kul-tiras");
-		}
-
-		[TestMethod]
-		public void Get_Invalid_KR_Realm_Returns_Null()
-		{
-			realmExplorer.Region = "kr";
-			var realm = realmExplorer.GetSingleRealm("dekuz");
-			Assert.IsNull(realm);
 		}
 
 		[TestMethod]
