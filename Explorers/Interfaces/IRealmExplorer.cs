@@ -7,30 +7,30 @@ using WowDotNetAPI.Explorers.Models;
 
 namespace WowDotNetAPI.Explorers.Interfaces
 {
-	public interface IRealmExplorer : IExplorer
+	public interface IRealmExplorer
 	{
 		Realm GetSingleRealm(string name);
 		string GetSingleRealmAsJson(string name);
 
-		RealmList GetAllRealms();
+        RealmList GetAllRealms();
 		string GetAllRealmsAsJson();
 
-		RealmList GetRealmsByType(string type);
+        RealmList GetRealmsByType(string type);
 		string GetRealmsByTypeAsJson(string type);
 
-		RealmList GetRealmsByPopulation(string population);
+        RealmList GetRealmsByPopulation(string population);
 		string GetRealmsByPopulationAsJson(string population);
 
-		RealmList GetRealmsByStatus(bool status);
+        RealmList GetRealmsByStatus(bool status);
 		string GetRealmsByStatusAsJson(bool status);
 
-		RealmList GetRealmsByQueue(bool queue);
+        RealmList GetRealmsByQueue(bool queue);
 		string GetRealmsByQueueAsJson(bool queue);
 
-		RealmList GetMultipleRealms(params string[] names);
+        RealmList GetMultipleRealms(params string[] names);
 		string GetMultipleRealmsAsJson(params string[] names);
 
-		RealmList GetMultipleRealmsViaQuery(string query);
+        RealmList GetMultipleRealmsViaQuery(string query);
 		string GetRealmsViaQueryAsJson(string query);
 	}
 }
