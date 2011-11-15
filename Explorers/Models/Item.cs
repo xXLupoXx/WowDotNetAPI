@@ -101,5 +101,8 @@ namespace WowDotNetAPI.Models
 
         [DataMember(Name = "isAuctionable")]
         public bool IsAuctionable { get; set; }
+        
+        [DataMember(Name = "disenchantingSkillRank")]
+        public int DisenchantingSkillRank { get; set; }
     }
 }
